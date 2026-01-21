@@ -4,6 +4,7 @@ import { groupItemsByLayout } from "@/utils/groupItems";
 import { createContext, ReactNode, useContext, useMemo } from "react";
 
 interface ItemsContextType {
+  items: Item[];
   groupedPetItems: (Item | Item[])[];
   groupedPeopleItems: (Item | Item[])[];
   loading: boolean;
@@ -28,6 +29,7 @@ export const ItemsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ItemsContext.Provider
       value={{
+        items,
         groupedPetItems,
         groupedPeopleItems,
         loading,

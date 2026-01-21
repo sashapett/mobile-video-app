@@ -1,6 +1,7 @@
 import { Item } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { ResizeMode, Video } from "expo-av";
+import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -14,6 +15,7 @@ interface HalfWidthCardProps {
 }
 
 export const HalfWidthCard = ({ item }: HalfWidthCardProps) => {
+  const router = useRouter();
   const videoRef = useRef<Video>(null);
   const [isPlaying, setIsPlaying] = useState(item.autoplay);
   const hasBadge = item.tags.length > 0;
@@ -30,8 +32,15 @@ export const HalfWidthCard = ({ item }: HalfWidthCardProps) => {
     }
   };
 
+  const handleCardPress = () => {
+    router.push({
+      pathname: `/item/[id]`,
+      params: { id: item.id },
+    });
+  };
+
   return (
-    <View style={styles.card}>
+    <Pressable style={styles.card} onPress={handleCardPress}>
       <View style={styles.videoContainer}>
         <Video
           ref={videoRef}
@@ -43,7 +52,13 @@ export const HalfWidthCard = ({ item }: HalfWidthCardProps) => {
           isMuted={true}
         />
         <View style={styles.topBar}>
-          <Pressable style={styles.playButton} onPress={togglePlayPause}>
+          <Pressable
+            style={styles.playButton}
+            onPress={(e) => {
+              e.stopPropagation();
+              togglePlayPause();
+            }}
+          >
             <Ionicons
               name={isPlaying ? "pause-circle" : "play-circle"}
               size={38}
@@ -64,7 +79,7 @@ export const HalfWidthCard = ({ item }: HalfWidthCardProps) => {
         </Text>
         <Text style={styles.arrow}>›</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
