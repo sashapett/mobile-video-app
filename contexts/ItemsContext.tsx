@@ -1,13 +1,13 @@
-import { createContext, ReactNode, useContext } from "react";
-import { useItems } from "../hooks/useItems";
-import { Item } from "../types";
+import { useItems } from "@/hooks/useItems";
+import { Item } from "@/types";
+import { groupItemsByLayout } from "@/utils/groupItems";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 
 interface ItemsContextType {
-  items: Item[];
+  groupedPetItems: (Item | Item[])[];
+  groupedPeopleItems: (Item | Item[])[];
   loading: boolean;
   error: string | null;
-  petItems: Item[];
-  peopleItems: Item[];
 }
 
 const ItemsContext = createContext<ItemsContextType | undefined>(undefined);
@@ -15,12 +15,24 @@ const ItemsContext = createContext<ItemsContextType | undefined>(undefined);
 export const ItemsProvider = ({ children }: { children: ReactNode }) => {
   const { items, loading, error } = useItems();
 
-  const petItems = items.filter((item) => item.type === "CAT");
-  const peopleItems = items.filter((item) => item.type === "HUMAN");
+  const groupedPetItems = useMemo(() => {
+    const pets = items.filter((item) => item.type === "CAT");
+    return groupItemsByLayout(pets);
+  }, [items]);
+
+  const groupedPeopleItems = useMemo(() => {
+    const people = items.filter((item) => item.type === "HUMAN");
+    return groupItemsByLayout(people);
+  }, [items]);
 
   return (
     <ItemsContext.Provider
-      value={{ items, loading, error, petItems, peopleItems }}
+      value={{
+        groupedPetItems,
+        groupedPeopleItems,
+        loading,
+        error,
+      }}
     >
       {children}
     </ItemsContext.Provider>

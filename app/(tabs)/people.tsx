@@ -1,3 +1,6 @@
+import { FullWidthCard } from "@/components/FullWidthCard";
+import { HalfWidthRow } from "@/components/HalfWidthRow";
+import { Item } from "@/types";
 import {
   ActivityIndicator,
   FlatList,
@@ -8,7 +11,21 @@ import {
 import { useItemsContext } from "../../contexts/ItemsContext";
 
 const PeopleTab = () => {
-  const { peopleItems, loading, error } = useItemsContext();
+  const { groupedPeopleItems, loading, error } = useItemsContext();
+
+  const getItemKey = (item: Item | Item[]) => {
+    if (Array.isArray(item)) {
+      return item.map((i) => i.id).join("-");
+    }
+    return item.id;
+  };
+
+  const renderItem = ({ item }: { item: Item | Item[] }) => {
+    if (Array.isArray(item)) {
+      return <HalfWidthRow items={item} />;
+    }
+    return <FullWidthCard item={item} />;
+  };
 
   if (loading) {
     return (
@@ -29,16 +46,11 @@ const PeopleTab = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={peopleItems}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.placeholder}>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemDescription}>{item.description}</Text>
-            <Text style={styles.itemLayout}>Layout: {item.layout}</Text>
-          </View>
-        )}
+        data={groupedPeopleItems}
+        keyExtractor={getItemKey}
+        renderItem={renderItem}
         contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
