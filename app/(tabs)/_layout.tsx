@@ -11,17 +11,14 @@ const TabLayout = () => (
   <SafeAreaView style={styles.container} edges={["top"]}>
     <MaterialTopTabs
       screenOptions={{
-        tabBarActiveTintColor: "#007AFF",
+        tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#8E8E93",
         tabBarStyle: {
-          backgroundColor: "#ffffff",
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 1,
-          borderBottomColor: "#e5e5e5",
+          backgroundColor: "#1c1c1e",
+          borderBottomColor: "#2c2c2e",
         },
         tabBarIndicatorStyle: {
-          backgroundColor: "#007AFF",
+          backgroundColor: "#fff",
           height: 3,
         },
         tabBarLabelStyle: {
@@ -51,7 +48,7 @@ const TabLayout = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#1c1c1e",
   },
 });
 
