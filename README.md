@@ -73,7 +73,7 @@ npx expo start
 1. **Data consistency**: Frontend handles incomplete half-width pairs gracefully
 2. **Scale**: Current implementation works for <100 items
 3. **Deep linking**: Not implemented but architecture supports it
-4. Screens have repetetive components, it is best to refactor code a bit move into seperate components and use atomic design pattern across all the app. 
+4. Screens have repetitive components, it is best to refactor code a bit move into seperate components and use atomic design pattern across all the app. 
 
 ---
 
