@@ -1,5 +1,6 @@
 import { FullWidthCard } from "@/components/FullWidthCard";
 import { HalfWidthRow } from "@/components/HalfWidthRow";
+import { useItemsContext } from "@/contexts/ItemsContext";
 import { Item } from "@/types";
 import {
   ActivityIndicator,
@@ -8,7 +9,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { useItemsContext } from "../../contexts/ItemsContext";
 
 const PeopleTab = () => {
   const { groupedPeopleItems, loading, error } = useItemsContext();

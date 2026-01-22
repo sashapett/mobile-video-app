@@ -14,6 +14,7 @@ export const FullWidthCard = ({ item }: FullWidthCardProps) => {
   const videoRef = useRef<Video>(null);
   const [isPlaying, setIsPlaying] = useState(item.autoplay);
   const hasBadge = item.tags.length > 0;
+  const isButtonVisible = !item.autoplay;
 
   const togglePlayPause = async () => {
     if (!videoRef.current) return;
@@ -46,20 +47,27 @@ export const FullWidthCard = ({ item }: FullWidthCardProps) => {
           isLooping={true}
           isMuted={true}
         />
-        <View style={styles.topBar}>
-          <Pressable
-            style={styles.playButton}
-            onPress={(e) => {
-              e.stopPropagation();
-              togglePlayPause();
-            }}
-          >
-            <Ionicons
-              name={isPlaying ? "pause-circle" : "play-circle"}
-              size={38}
-              color="rgba(255,255,255,0.9)"
-            />
-          </Pressable>
+        <View
+          style={[
+            styles.topBar,
+            !isButtonVisible && hasBadge && styles.topBarEnd,
+          ]}
+        >
+          {isButtonVisible && (
+            <Pressable
+              style={styles.playButton}
+              onPress={(e) => {
+                e.stopPropagation();
+                togglePlayPause();
+              }}
+            >
+              <Ionicons
+                name={isPlaying ? "pause-circle" : "play-circle"}
+                size={38}
+                color="rgba(255,255,255,0.9)"
+              />
+            </Pressable>
+          )}
 
           {hasBadge && (
             <View style={styles.badge}>
@@ -108,6 +116,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
+  },
+  topBarEnd: {
+    justifyContent: "flex-end",
+    padding: 6,
+    paddingVertical: 12,
   },
   playButton: {
     padding: 6, // INCREASE TAP AREA

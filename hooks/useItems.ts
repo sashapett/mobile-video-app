@@ -1,6 +1,6 @@
+import { fetchHomeItems } from "@/services/api";
+import { Item } from "@/types";
 import { useEffect, useState } from "react";
-import { fetchHomeItems } from "../services/api";
-import { Item } from "../types";
 
 export const useItems = () => {
   const [items, setItems] = useState<Item[]>([]);

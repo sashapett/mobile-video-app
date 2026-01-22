@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-export default function PetsTab() {
+const PetsTab = () => {
   const { groupedPetItems, loading, error } = useItemsContext();
 
   const getItemKey = (item: Item | Item[]) => {
@@ -54,7 +54,7 @@ export default function PetsTab() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -75,3 +75,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export default PetsTab;

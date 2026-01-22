@@ -1,9 +1,9 @@
+import { useItemsContext } from "@/contexts/ItemsContext";
 import { Ionicons } from "@expo/vector-icons";
 import { ResizeMode, Video } from "expo-av";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import { Dimensions, Pressable, StyleSheet, View } from "react-native";
-import { useItemsContext } from "../../contexts/ItemsContext";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 const VIDEO_HEIGHT = height - 100;
@@ -13,7 +13,7 @@ const ItemDetailScreen = () => {
   const router = useRouter();
   const { items } = useItemsContext();
   const videoRef = useRef<Video>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const item = items.find((i) => i.id === id);
 
@@ -30,8 +30,15 @@ const ItemDetailScreen = () => {
   };
 
   if (!item) {
-    router.back();
-    return null;
+    return (
+      <View style={styles.errorContainer}>
+        <Ionicons name="alert-circle-outline" size={64} color="#ff3b30" />
+        <Text style={styles.errorText}>Item not found</Text>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backButtonText}>Go Back</Text>
+        </Pressable>
+      </View>
+    );
   }
 
   return (
@@ -43,7 +50,7 @@ const ItemDetailScreen = () => {
             source={{ uri: item.videoUrl }}
             style={styles.video}
             resizeMode={ResizeMode.CONTAIN}
-            shouldPlay={true}
+            shouldPlay={isPlaying}
             isLooping={true}
             isMuted={false}
           />
@@ -91,6 +98,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   playOverlay: {
+    ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -98,6 +106,31 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.4)",
     borderRadius: 40,
     padding: 8,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000",
+    padding: 20,
+  },
+  errorText: {
+    color: "#ff3b30",
+    fontSize: 20,
+    fontWeight: "600",
+    marginTop: 16,
+    marginBottom: 24,
+  },
+  backButton: {
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  backButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
 
