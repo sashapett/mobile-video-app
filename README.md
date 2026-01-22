@@ -3,6 +3,8 @@ A React Native video gallery app built with Expo Router, featuring categorized c
 The application was developed and tested primarily on iPhone. At the time of development, I did not have access to an Android device for Expo Go, and my local Android emulator environment was unavailable due to developing on Windows without access to a macOS setup.
 As a result, there may be minor UI or behavior inconsistencies on Android — apologies in advance for that.
 
+Also to note, I didn't test any android or ios release builds like apk or aab cause I didn't have the possibility right now. Overall main focus on ExpoGo testing env.
+
 ## 🚀 Setup
 
 ```bash
