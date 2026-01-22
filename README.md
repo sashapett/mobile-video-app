@@ -1,5 +1,8 @@
 A React Native video gallery app built with Expo Router, featuring categorized content (Pets & People) with modern iOS-style design.
 
+The application was developed and tested primarily on iPhone. At the time of development, I did not have access to an Android device for Expo Go, and my local Android emulator environment was unavailable due to developing on Windows without access to a macOS setup.
+As a result, there may be minor UI or behavior inconsistencies on Android — apologies in advance for that.
+
 ## 🚀 Setup
 
 ```bash
